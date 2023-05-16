@@ -26,6 +26,7 @@ public class AlumneEntity extends ORMEntity {
     /**
      * Getters i Setters
      */
+    
     public int getCodiAl() {
         return codiAl;
     }
