@@ -122,4 +122,35 @@ public class GrupTable extends ORMTable {
         return numFilesAfectades;
     }
 
+    @Override
+    public int Update(ORMEntity o) throws NullConnectionException, SQLException {
+        if (getBDConnection() == null) {
+            throw new NullConnectionException();
+        }
+
+        if (getBDConnection().getConnection() == null) {
+            throw new NullConnectionException();
+        }
+
+        try {
+            if (getBDConnection().getConnection().isClosed()) {
+                throw new NullConnectionException();
+            }
+        } catch (SQLException e) {
+            throw new NullConnectionException();
+        }
+        GrupEntity g = (GrupEntity) o;
+        String sqlCommand = "UPDATE Grup SET Nom = '" + g.getNom() + "', numAlumnes = " + g.getnumAlumnes() +
+                ", quota = " + g.getQuota() + " WHERE codiGrup = " + g.getID();
+
+        Statement st = getBDConnection().getConnection().createStatement();
+        int numFilesAfectades = st.executeUpdate(sqlCommand);
+        st.close();
+
+        //Confirma els canvis
+        getBDConnection().getConnection().commit();
+
+        return numFilesAfectades;
+    }
+
 }
