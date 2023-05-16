@@ -33,14 +33,14 @@ public class UF6Projecte {
             
             
             //Crear l'objecte de la taula persona i assignar la connexió
-            PersonaTable pt = new PersonaTable();
+            GrupTable pt = new GrupTable();
             pt.setConnection(bdCon);  
                      
             System.out.println("Vols inserir una nova persona?");
             if (scan.nextLine().equalsIgnoreCase("S"))
             {
                 // inserir una Persona            
-                PersonaEntity p = new PersonaEntity(6, "Nova","Persona",25);
+                GrupEntity p = new GrupEntity(3, "grupo1",0,25);
                               
                 pt.Insert(p);
                 
@@ -54,15 +54,15 @@ public class UF6Projecte {
             }
             
             // Consultar totes les persones
-            ArrayList<PersonaEntity> listaPersonas = pt.GetAll();
+            ArrayList<GrupEntity> listaPersonas = pt.GetAll();
             
-            for (PersonaEntity p : listaPersonas)
+            for (GrupEntity p : listaPersonas)
             {
                 System.out.println("----");
                 System.out.println("ID: " + p.getID());
                 System.out.println("Nom: " + p.getNom());
-                System.out.println("Cognoms: " + p.getCognoms());
-                System.out.println("Edat: " + p.getEdat());
+                System.out.println("numAlumnes: " + p.getnumAlumnes());
+                System.out.println("quota: " + p.getQuota());
                 System.out.println("----");
             }
 
@@ -80,7 +80,7 @@ public class UF6Projecte {
             System.out.println();
             System.out.println("El getMessage es: " + se.getMessage());
         } catch (NullConnectionException ex) {
-            Logger.getLogger(M03_UF6_BD_ORM.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UF6Projecte.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

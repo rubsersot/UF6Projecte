@@ -47,8 +47,8 @@ public class GrupTable extends ORMTable {
             throw new NullConnectionException();
         }
         GrupEntity g = (GrupEntity) o;
-        String sqlCommand = "INSERT INTO Grup VALUES (codiGrup, Nom, numAlumnes, quota) "
-                + "VALUES (" + g.getID() + ",'" + g.getNom() + "','" + g.getnumAlumnes() + "'," + g.getQuota() + ")";
+        String sqlCommand = "INSERT INTO GRUP (codiGrup, nom, numAlumnes, quota) "
+                + "VALUES (" + g.getID() + ",'" + g.getNom() + "'," + g.getnumAlumnes() + "," + g.getQuota() + ")";
 
         Statement st = getBDConnection().getConnection().createStatement();
         int numFilesAfectades = st.executeUpdate(sqlCommand);
@@ -78,7 +78,7 @@ public class GrupTable extends ORMTable {
         while (resultat.next()) {
             GrupEntity g = new GrupEntity(
                     resultat.getInt("codiGrup"), 
-                    resultat.getString("Nom"), 
+                    resultat.getString("nom"), 
                     resultat.getInt("numAlumnes"), 
                     resultat.getFloat("quota"));
             resultList.add(g);
@@ -90,7 +90,7 @@ public class GrupTable extends ORMTable {
 
         return resultList;
     }
-    // </editor-fold>
+    
 
     @Override
     public int Delete(ORMEntity o) throws NullConnectionException, SQLException {
@@ -140,7 +140,7 @@ public class GrupTable extends ORMTable {
             throw new NullConnectionException();
         }
         GrupEntity g = (GrupEntity) o;
-        String sqlCommand = "UPDATE Grup SET Nom = '" + g.getNom() + "', numAlumnes = " + g.getnumAlumnes() +
+        String sqlCommand = "UPDATE Grup SET nom = '" + g.getNom() + "', numAlumnes = " + g.getnumAlumnes() +
                 ", quota = " + g.getQuota() + " WHERE codiGrup = " + g.getID();
 
         Statement st = getBDConnection().getConnection().createStatement();
@@ -153,4 +153,5 @@ public class GrupTable extends ORMTable {
         return numFilesAfectades;
     }
 
+    // </editor-fold>
 }
