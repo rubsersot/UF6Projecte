@@ -44,6 +44,8 @@ public abstract class ORMTable{
     // <editor-fold defaultstate="collapsed" desc="Operacions amb la Base de Dades">
     
     public abstract int Insert(ORMEntity o) throws NullConnectionException, SQLException;
+    public abstract int Delete(ORMEntity o) throws NullConnectionException, SQLException;
+    public abstract int Update(ORMEntity o) throws NullConnectionException, SQLException;
     public abstract ArrayList<?> GetAll() throws NullConnectionException, SQLException;
     
     // </editor-fold>
