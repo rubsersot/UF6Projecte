@@ -46,9 +46,9 @@ public class AlumneTable extends ORMTable {
         } catch (SQLException e) {
             throw new NullConnectionException();
         }
-        PersonaEntity p = (PersonaEntity) o;
-        String sqlCommand = "INSERT INTO Persona VALUES (ID, Nom, Cognom, Edat) "
-                + "VALUES (" + p.getID() + ",'" + p.getNom() + "','" + p.getCognoms() + "'," + p.getEdat() + ")";
+        AlumneEntity alum = (AlumneEntity) o;
+        String sqlCommand = "INSERT INTO ALUMNE (codiAl, nom, DNI, codiGrup) "
+                + "VALUES (" + alum.getCodiAl() + ",'" + alum.getNom() + "','" + alum.getDNI() + "'," + alum.getCodiGrup() + ")";
 
         Statement st = getBDConnection().getConnection().createStatement();
         int numFilesAfectades = st.executeUpdate(sqlCommand);
@@ -67,20 +67,20 @@ public class AlumneTable extends ORMTable {
      * @throws SQLException 
      */
     @Override
-    public ArrayList<PersonaEntity> GetAll() throws NullConnectionException, SQLException {
+    public ArrayList<AlumneEntity> GetAll() throws NullConnectionException, SQLException {
 
-        ArrayList<PersonaEntity> resultList = new ArrayList<PersonaEntity>();
+        ArrayList<AlumneEntity> resultList = new ArrayList<>();
 
         Statement consulta = getBDConnection().getConnection().createStatement();
-        ResultSet resultat = consulta.executeQuery("SELECT * FROM Persones");
+        ResultSet resultat = consulta.executeQuery("SELECT * FROM Alumne");
 
         while (resultat.next()) {
-            PersonaEntity p = new PersonaEntity(
-                    resultat.getInt("ID"), 
-                    resultat.getString("Nom"), 
-                    resultat.getString("Cognoms"), 
-                    resultat.getInt("Edat"));
-            resultList.add(p);
+            AlumneEntity alum = new AlumneEntity(
+                    resultat.getInt("codiAl"), 
+                    resultat.getString("nom"), 
+                    resultat.getString("DNI"), 
+                    resultat.getInt("codiGrup"));
+            resultList.add(alum);
         }
 
         //Tancar resultat i consulta

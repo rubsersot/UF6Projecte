@@ -9,30 +9,25 @@ public class AlumneEntity extends ORMEntity {
     // <editor-fold defaultstate="collapsed" desc="Propietats de l'objecte">
     /* Propietats de l'objecte */
     /* Camps de la taula */
-    private int ID;
-    private String nom;
-    private String cognoms;
-    private int edat;
-
-    /* Connexió a la Base de dades */
-    private BDConnection c;
-    //</editor-fold>
+    private int codiAl;
+    private String nom, DNI;
+    private int codiGrup;
 
     // <editor-fold defaultstate="collapsed" desc="Constructor">
-    public AlumneEntity(int ID, String nom, String cognoms, int edat) {
-        this.ID = ID;
+    
+    public AlumneEntity(int codiAl, String nom, String DNI, int codiGrup) {
+        this.codiAl = codiAl;
         this.nom = nom;
-        this.cognoms = cognoms;
-        this.edat = edat;
+        this.DNI = DNI;
+        this.codiGrup = codiGrup;
     }
     //</editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Getters i Setters">
-    /** 
-     * Getters i Setters 
+    /**
+     * Getters i Setters
      */
-    public int getID() {
-        return ID;
+    public int getCodiAl() {
+        return codiAl;
     }
 
     public String getNom() {
@@ -43,24 +38,20 @@ public class AlumneEntity extends ORMEntity {
         this.nom = nom;
     }
 
-    public String getCognoms() {
-        return cognoms;
+    public String getDNI() {
+        return DNI;
     }
 
-    public void setCognoms(String cognoms) {
-        this.cognoms = cognoms;
+    public void setDNI(String DNI) {
+        this.DNI = DNI;
     }
 
-    public int getEdat() {
-        return edat;
+    public int getCodiGrup() {
+        return codiGrup;
     }
 
-    public void setEdat(int edat) {
-        this.edat = edat;
-    }
-
-    public void setConnection(BDConnection c) {
-        this.c = c;
+    public void setCodiGrup(int codiGrup) {
+        this.codiGrup = codiGrup;
     }
     //</editor-fold>
 
