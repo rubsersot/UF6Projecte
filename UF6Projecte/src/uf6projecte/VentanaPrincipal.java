@@ -69,6 +69,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void botoObrirAlumnesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoObrirAlumnesActionPerformed
         VentanaAlumnes f2 = new VentanaAlumnes();
         f2.setVisible(true);
+        f2.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_botoObrirAlumnesActionPerformed
 
     /**

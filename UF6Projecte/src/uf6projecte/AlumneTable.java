@@ -59,6 +59,67 @@ public class AlumneTable extends ORMTable {
 
         return numFilesAfectades;
     }
+    
+    @Override
+    public int Delete(ORMEntity o) throws NullConnectionException, SQLException {
+        if (getBDConnection() == null) {
+            throw new NullConnectionException();
+        }
+
+        if (getBDConnection().getConnection() == null) {
+            throw new NullConnectionException();
+        }
+
+        try {
+            if (getBDConnection().getConnection().isClosed()) {
+                throw new NullConnectionException();
+            }
+        } catch (SQLException e) {
+            throw new NullConnectionException();
+        }
+        AlumneEntity alum = (AlumneEntity) o;
+        String sqlCommand = "DELETE FROM ALUMNE WHERE codiAl= "+ alum.getCodiAl();
+
+        Statement st = getBDConnection().getConnection().createStatement();
+        int numFilesAfectades = st.executeUpdate(sqlCommand);
+        st.close();
+
+        //Confirma els canvis
+        getBDConnection().getConnection().commit();
+
+        return numFilesAfectades;
+    }
+
+    @Override
+    public int Update(ORMEntity o) throws NullConnectionException, SQLException {
+        if (getBDConnection() == null) {
+            throw new NullConnectionException();
+        }
+
+        if (getBDConnection().getConnection() == null) {
+            throw new NullConnectionException();
+        }
+
+        try {
+            if (getBDConnection().getConnection().isClosed()) {
+                throw new NullConnectionException();
+            }
+        } catch (SQLException e) {
+            throw new NullConnectionException();
+        }
+        AlumneEntity alum = (AlumneEntity) o;
+        String sqlCommand = "UPDATE ALUMNE SET Nom = '" + alum.getNom() + "', DNI = " + alum.getDNI()+
+                " WHERE codiAl = " + alum.getCodiAl();
+
+        Statement st = getBDConnection().getConnection().createStatement();
+        int numFilesAfectades = st.executeUpdate(sqlCommand);
+        st.close();
+
+        //Confirma els canvis
+        getBDConnection().getConnection().commit();
+
+        return numFilesAfectades;
+    }
 
     /**
      * Obté tots els registres de la taula
@@ -72,7 +133,7 @@ public class AlumneTable extends ORMTable {
         ArrayList<AlumneEntity> resultList = new ArrayList<>();
 
         Statement consulta = getBDConnection().getConnection().createStatement();
-        ResultSet resultat = consulta.executeQuery("SELECT * FROM Alumne");
+        ResultSet resultat = consulta.executeQuery("SELECT * FROM ALUMNE");
 
         while (resultat.next()) {
             AlumneEntity alum = new AlumneEntity(
