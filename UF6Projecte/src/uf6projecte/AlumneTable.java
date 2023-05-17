@@ -15,7 +15,7 @@ public class AlumneTable extends ORMTable {
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Constructor">
     public AlumneTable() {
-        super("Persona");
+        super("ALUMNE");
     }
     //</editor-fold>
 

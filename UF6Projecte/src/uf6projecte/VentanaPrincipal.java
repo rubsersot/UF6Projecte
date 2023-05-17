@@ -10,10 +10,14 @@ package uf6projecte;
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
+    VentanaAlumnes f2;
+    
     /**
      * Creates new form VentanaGrup
      */
     public VentanaPrincipal() {
+        f2 = new VentanaAlumnes();
+        
         initComponents();
     }
 
@@ -67,7 +71,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botoObrirAlumnesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoObrirAlumnesActionPerformed
-        VentanaAlumnes f2 = new VentanaAlumnes();
         f2.setVisible(true);
         f2.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_botoObrirAlumnesActionPerformed
