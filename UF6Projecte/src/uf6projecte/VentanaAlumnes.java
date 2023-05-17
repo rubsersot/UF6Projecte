@@ -21,28 +21,24 @@ import static uf6projecte.UF6Projecte.USER;
  */
 public class VentanaAlumnes extends javax.swing.JFrame {
     
-    private static int contadorAlumnes;
-    private static AlumneTable alumTab = new AlumneTable();
+    private static int contadorAlumnes = 0;
+    private static AlumneTable alumTab;
     private static ArrayList<AlumneEntity> llista_alumnes;
-    AfegirAlumne afegirAl;
-    ModificarAlumne modAl;
-
     /**
      * Creates new form VentanaAlumnes
      */
     public VentanaAlumnes() {
         
         try {
+            alumTab = new AlumneTable();
             BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
             alumTab.setConnection(bdCon);
             VentanaAlumnes.llista_alumnes = alumTab.GetAll();
-            VentanaAlumnes.contadorAlumnes = 0;
-            afegirAl = new AfegirAlumne();
-            modAl = new ModificarAlumne();
+            
         } catch (NullConnectionException | SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
-        
+        setResizable(false);
         initComponents();
     }
 
@@ -113,6 +109,11 @@ public class VentanaAlumnes extends javax.swing.JFrame {
         });
 
         jButton3.setText("Esborrar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         codiAl.setText(Integer.toString(llista_alumnes.get(contadorAlumnes).getCodiAl()));
 
@@ -141,51 +142,50 @@ public class VentanaAlumnes extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(botoAnterior)
                         .addGap(33, 33, 33)
-                        .addComponent(botoSeguent))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(166, 166, 166)
+                        .addComponent(botoSeguent)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(30, 30, 30)
+                .addComponent(jButton3)
+                .addGap(102, 102, 102))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 187, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(116, 116, 116)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nomAl)
                             .addComponent(dniAl)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(codiAl)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3)))))
-                .addContainerGap(63, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(codiAl))
+                        .addGap(1, 1, 1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(166, 166, 166)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel2)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(codiGrupAl))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1)))))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addGap(30, 30, 30)
+                        .addComponent(codiGrupAl)))
+                .addGap(172, 172, 172))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(242, 242, 242)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(29, 29, 29)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(codiAl))
@@ -217,8 +217,11 @@ public class VentanaAlumnes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        modAl.setVisible(true);
-        modAl.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        if(!ModificarAlumne.isOpen){
+            ModificarAlumne modAl = new ModificarAlumne();
+            modAl.setVisible(true);
+            modAl.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void botoSeguentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoSeguentActionPerformed
@@ -243,9 +246,33 @@ public class VentanaAlumnes extends javax.swing.JFrame {
     }//GEN-LAST:event_botoAnteriorActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        afegirAl.setVisible(true);
-        afegirAl.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        if(!AfegirAlumne.isOpen){
+            AfegirAlumne afegirAl = new AfegirAlumne();
+            afegirAl.setVisible(true);
+            afegirAl.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            if(llista_alumnes.size() == 1){
+                JOptionPane.showMessageDialog(null, "No es pot esborrar quan només queda un alumne",
+                    "Esborrar", JOptionPane.ERROR_MESSAGE);
+            } else{
+                AlumneEntity esborrar = llista_alumnes.get(contadorAlumnes);
+                alumTab.Delete(esborrar);
+                JOptionPane.showMessageDialog(null, "Alumne esborrat",
+                    "Esborrar", JOptionPane.INFORMATION_MESSAGE);
+                llista_alumnes.remove(contadorAlumnes);
+                --contadorAlumnes;
+            }
+        } catch (NullConnectionException ex) {
+            Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     public void actualitzarMostrar(){
         codiAl.setText(Integer.toString(llista_alumnes.get(contadorAlumnes).getCodiAl()));

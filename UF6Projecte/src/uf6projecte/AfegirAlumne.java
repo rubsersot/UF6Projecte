@@ -6,9 +6,8 @@ package uf6projecte;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import static uf6projecte.UF6Projecte.BD_NAME;
 import static uf6projecte.UF6Projecte.PORT;
 import static uf6projecte.UF6Projecte.PWD;
@@ -21,7 +20,7 @@ import static uf6projecte.UF6Projecte.USER;
  */
 public class AfegirAlumne extends javax.swing.JFrame {
 
-    private AlumneEntity alumne;
+    public static boolean isOpen = false;
     private ArrayList<GrupEntity> llista_grups;
     
     /**
@@ -33,11 +32,14 @@ public class AfegirAlumne extends javax.swing.JFrame {
             BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
             gpTable.setConnection(bdCon);
             llista_grups = gpTable.GetAll();
-            alumne = VentanaAlumnes.getAlumneActual();
+            isOpen = true;
+            setResizable(false);
+            
             initComponents();
+            llista_grups_afegir.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         } catch (ClassNotFoundException | SQLException | NullConnectionException ex) {
             System.out.println(ex.getMessage());
-        }
+        } 
     }
 
     /**
@@ -162,13 +164,17 @@ public class AfegirAlumne extends javax.swing.JFrame {
             bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
             alumTable.setConnection(bdCon);
             alumTable.Insert(alumne);
-        } catch (ClassNotFoundException | SQLException | NullConnectionException ex) {
-            System.out.println(ex.getMessage());
-        } 
-        JOptionPane.showMessageDialog(null, "Alumne afegit",
+            JOptionPane.showMessageDialog(null, "Alumne afegit",
                 "Afegir", JOptionPane.INFORMATION_MESSAGE);
-        VentanaAlumnes ventAlum = new VentanaAlumnes();
-        ventAlum.actualitzarMostrar();
+            VentanaAlumnes ventAlum = new VentanaAlumnes();
+            ventAlum.actualitzarMostrar();
+        } catch (ClassNotFoundException | NullConnectionException ex) {
+            System.out.println(ex.getMessage());
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "ERROR, l'alumne amb aquest codi ja existeix",
+                "ERROR", JOptionPane.WARNING_MESSAGE);
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

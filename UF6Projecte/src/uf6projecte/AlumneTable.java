@@ -108,8 +108,8 @@ public class AlumneTable extends ORMTable {
             throw new NullConnectionException();
         }
         AlumneEntity alum = (AlumneEntity) o;
-        String sqlCommand = "UPDATE ALUMNE SET Nom = '" + alum.getNom() + "', DNI = " + alum.getDNI()+
-                " WHERE codiAl = " + alum.getCodiAl();
+        String sqlCommand = "UPDATE ALUMNE SET nom = '" + alum.getNom() + "', DNI = '" + alum.getDNI()+
+                "', codiGrup = " + alum.getCodiGrup() + " WHERE codiAl = " + alum.getCodiAl();
 
         Statement st = getBDConnection().getConnection().createStatement();
         int numFilesAfectades = st.executeUpdate(sqlCommand);
