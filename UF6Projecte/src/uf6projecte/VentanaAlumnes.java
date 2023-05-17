@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import static uf6projecte.UF6Projecte.BD_NAME;
 import static uf6projecte.UF6Projecte.PORT;
 import static uf6projecte.UF6Projecte.PWD;
@@ -210,13 +211,24 @@ public class VentanaAlumnes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void botoSeguentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoSeguentActionPerformed
-        ++contadorAlumnes;
-        actualitzarMostrar();
+        if(contadorAlumnes >= llista_alumnes.size()-1){
+            JOptionPane.showMessageDialog(null, "No hi ha alumnes posteriors a aquest", 
+                    "ERROR", JOptionPane.INFORMATION_MESSAGE);
+        } else{
+            ++contadorAlumnes;
+            actualitzarMostrar();
+        }
+        
     }//GEN-LAST:event_botoSeguentActionPerformed
 
     private void botoAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoAnteriorActionPerformed
-        --contadorAlumnes;
-        actualitzarMostrar();
+        if(contadorAlumnes == 0){
+            JOptionPane.showMessageDialog(null, "No hi ha alumnes anteriors a aquest", 
+                    "ERROR", JOptionPane.INFORMATION_MESSAGE);
+        } else{
+            --contadorAlumnes;
+            actualitzarMostrar();
+        }
     }//GEN-LAST:event_botoAnteriorActionPerformed
 
     public void actualitzarMostrar(){
