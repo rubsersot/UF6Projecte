@@ -4,21 +4,47 @@
  */
 package uf6projecte;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import static uf6projecte.UF6Projecte.BD_NAME;
+import static uf6projecte.UF6Projecte.PORT;
+import static uf6projecte.UF6Projecte.PWD;
+import static uf6projecte.UF6Projecte.URL;
+import static uf6projecte.UF6Projecte.USER;
+
 /**
  *
  * @author ausias
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
-    VentanaAlumnes f2;
-    
+    private static int contadorGrups = 0;
+    private static GrupTable grupTab;
+    private static ArrayList<GrupEntity> llista_Grups;
+
     /**
-     * Creates new form VentanaGrup
+     * Creates new form VentanaAlumnes
      */
     public VentanaPrincipal() {
-        f2 = new VentanaAlumnes();
-        
+
+        try {
+            grupTab = new GrupTable();
+            BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
+            grupTab.setConnection(bdCon);
+            VentanaPrincipal.llista_Grups = grupTab.GetAll();
+
+        } catch (NullConnectionException | SQLException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
+        setResizable(false);
         initComponents();
+    }
+
+    public static GrupEntity getGrupActual() {
+        return llista_Grups.get(contadorGrups);
     }
 
     /**
@@ -32,6 +58,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         botoObrirAlumnes = new javax.swing.JButton();
+        IDGrup = new javax.swing.JLabel();
+        nomGr = new javax.swing.JLabel();
+        numAlumnes = new javax.swing.JLabel();
+        quotaGrup = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        botoSeguent = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        botoAnterior = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,36 +83,207 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        IDGrup.setText(Integer.toString(llista_Grups.get(contadorGrups).getID()));
+
+        nomGr.setText(llista_Grups.get(contadorGrups).getNom());
+
+        numAlumnes.setText(Integer.toString(llista_Grups.get(contadorGrups).getnumAlumnes()));
+
+        quotaGrup.setText(Float.toString(llista_Grups.get(contadorGrups).getQuota()));
+
+        jLabel2.setText("Codi Alumne:");
+
+        botoSeguent.setText("Següent Grup");
+        botoSeguent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botoSeguentActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Nom: ");
+
+        botoAnterior.setText("Anterior Grup");
+        botoAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botoAnteriorActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Nº Alumnes:");
+
+        jLabel5.setText("Quota");
+
+        jButton1.setText("Modificar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Afegir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Esborrar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(171, 171, 171)
-                .addComponent(jLabel1)
-                .addContainerGap(189, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botoObrirAlumnes)
-                .addGap(42, 42, 42))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botoObrirAlumnes)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(201, 201, 201))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(51, 74, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addGap(43, 43, 43)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(quotaGrup)
+                                    .addComponent(nomGr)
+                                    .addComponent(numAlumnes)
+                                    .addComponent(IDGrup))
+                                .addGap(113, 113, 113))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jButton2)
+                                    .addGap(38, 38, 38)
+                                    .addComponent(jButton1)
+                                    .addGap(33, 33, 33)
+                                    .addComponent(jButton3)
+                                    .addGap(62, 62, 62))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(botoAnterior)
+                                    .addGap(44, 44, 44)
+                                    .addComponent(botoSeguent)
+                                    .addGap(42, 42, 42)))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(IDGrup))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(nomGr))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(numAlumnes))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(quotaGrup))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton1))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botoSeguent)
+                    .addComponent(botoAnterior))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(botoObrirAlumnes)
-                .addGap(27, 27, 27))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void botoObrirAlumnesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoObrirAlumnesActionPerformed
-        f2.setVisible(true);
-        f2.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+      //  f2.setVisible(true);
+        //f2.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_botoObrirAlumnesActionPerformed
+
+    private void botoSeguentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoSeguentActionPerformed
+        if (contadorGrups >= llista_Grups.size() - 1) {
+            JOptionPane.showMessageDialog(null, "No hi ha alumnes posteriors a aquest",
+                    "ERROR", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            ++contadorGrups;
+            actualitzarMostrar();
+        }
+
+    }//GEN-LAST:event_botoSeguentActionPerformed
+
+    private void botoAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoAnteriorActionPerformed
+        if (contadorGrups == 0) {
+            JOptionPane.showMessageDialog(null, "No hi ha alumnes anteriors a aquest",
+                    "ERROR", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            --contadorGrups;
+            actualitzarMostrar();
+        }
+    }//GEN-LAST:event_botoAnteriorActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (!ModificarAlumne.isOpen) {
+            ModificarAlumne modAl = new ModificarAlumne();
+            modAl.setVisible(true);
+            modAl.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (!AfegirAlumne.isOpen) {
+            AfegirAlumne afegirAl = new AfegirAlumne();
+            afegirAl.setVisible(true);
+            afegirAl.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+    public void actualitzarMostrar() {
+        IDGrup.setText(Integer.toString(llista_Grups.get(contadorGrups).getID()));
+        nomGr.setText(llista_Grups.get(contadorGrups).getNom());
+        numAlumnes.setText(Integer.toString(llista_Grups.get(contadorGrups).getnumAlumnes()));
+        quotaGrup.setText(Float.toString(llista_Grups.get(contadorGrups).getQuota()));
+        
+    }
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            if (llista_Grups.size() == 1) {
+                JOptionPane.showMessageDialog(null, "No es pot esborrar quan només queda un alumne",
+                        "Esborrar", JOptionPane.ERROR_MESSAGE);
+            } else {
+                GrupEntity esborrar = llista_Grups.get(contadorGrups);
+                grupTab.Delete(esborrar);
+                JOptionPane.showMessageDialog(null, "Alumne esborrat",
+                        "Esborrar", JOptionPane.INFORMATION_MESSAGE);
+                llista_Grups.remove(contadorGrups);
+                --contadorGrups;
+            }
+        } catch (NullConnectionException ex) {
+            Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -112,7 +322,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel IDGrup;
+    private javax.swing.JButton botoAnterior;
     private javax.swing.JButton botoObrirAlumnes;
+    private javax.swing.JButton botoSeguent;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel nomGr;
+    private javax.swing.JLabel numAlumnes;
+    private javax.swing.JLabel quotaGrup;
     // End of variables declaration//GEN-END:variables
 }
