@@ -4,7 +4,17 @@
  */
 package uf6projecte;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import static uf6projecte.UF6Projecte.BD_NAME;
+import static uf6projecte.UF6Projecte.PORT;
+import static uf6projecte.UF6Projecte.PWD;
+import static uf6projecte.UF6Projecte.URL;
+import static uf6projecte.UF6Projecte.USER;
 
 /**
  *
@@ -12,16 +22,29 @@ import java.util.ArrayList;
  */
 public class ModificarAlumne extends javax.swing.JFrame {
 
-    private AlumneEntity alumne;
+    public static boolean isOpen = false;
+    private AlumneEntity alum;
+    private ArrayList<GrupEntity> llista_grups;
     
     /**
      * Creates new form AfegirAlumne
      */
     public ModificarAlumne() {
-        alumne = VentanaAlumnes.getAlumneActual();
-        initComponents();
+        try {
+            alum = VentanaAlumnes.getAlumneActual();
+            GrupTable gpTable = new GrupTable();
+            BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
+            gpTable.setConnection(bdCon);
+            llista_grups = gpTable.GetAll();
+            isOpen = true;
+            setResizable(false);
+            initComponents();
+            llista_grups_modificar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        } catch (NullConnectionException | SQLException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,12 +54,10 @@ public class ModificarAlumne extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField(alumne.getNom());
+        nomAl = new javax.swing.JTextField(alum.getNom());
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField(Integer.toString(alumne.getCodiAl()));
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField(alumne.getDNI());
+        dniAl = new javax.swing.JTextField(alum.getDNI());
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         llista_grups_modificar = new javax.swing.JList<>();
@@ -46,20 +67,25 @@ public class ModificarAlumne extends javax.swing.JFrame {
 
         jLabel1.setText("Nom:");
 
-        jLabel2.setText("Codi:");
-
         jLabel3.setText("DNI:");
 
         jLabel4.setText("Grup:");
 
         llista_grups_modificar.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public int getSize() { return llista_grups.size(); }
+            public String getElementAt(int i) {
+                return llista_grups.get(i).getID() + "-"
+                + llista_grups.get(i).getNom();
+            }
         });
         jScrollPane1.setViewportView(llista_grups_modificar);
 
         jButton1.setText("Modificar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,33 +95,27 @@ public class ModificarAlumne extends javax.swing.JFrame {
                 .addGap(88, 88, 88)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nomAl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dniAl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(76, 76, 76)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nomAl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dniAl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -103,13 +123,35 @@ public class ModificarAlumne extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addComponent(jLabel4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(38, 38, 38))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int index = llista_grups_modificar.getSelectedIndex();
+        int codiGrup = llista_grups.get(index).getID();
+        AlumneEntity alumne = new AlumneEntity(alum.getCodiAl(), nomAl.getText(), dniAl.getText(), codiGrup);
+        AlumneTable alumTable = new AlumneTable();
+        BDConnection bdCon;
+        try {
+            bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
+            alumTable.setConnection(bdCon);
+            alumTable.Update(alumne);
+            JOptionPane.showMessageDialog(null, "Alumne modificat",
+                "Modificar", JOptionPane.INFORMATION_MESSAGE);
+            VentanaAlumnes ventAlum = new VentanaAlumnes();
+            ventAlum.actualitzarMostrar();
+        } catch (ClassNotFoundException | NullConnectionException ex) {
+            System.out.println(ex.getMessage());
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "ERROR, l'alumne amb aquest codi ja existeix",
+                "ERROR", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,15 +190,13 @@ public class ModificarAlumne extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField dniAl;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JList<String> llista_grups_modificar;
+    private javax.swing.JTextField nomAl;
     // End of variables declaration//GEN-END:variables
 }
