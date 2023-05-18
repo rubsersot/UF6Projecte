@@ -137,12 +137,16 @@ public class ModificarAlumne extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int index = llista_grups_modificar.getSelectedIndex();
-        int codiGrup = llista_grups.get(index).getID();
-        AlumneEntity alumne = new AlumneEntity(alum.getCodiAl(), nomAl.getText(), dniAl.getText(), codiGrup);
-        AlumneTable alumTable = new AlumneTable();
-        BDConnection bdCon;
         try {
+            int index = llista_grups_modificar.getSelectedIndex();
+            if(nomAl.getText().equals("") || dniAl.getText().equals("") 
+                    || index == -1){
+                throw new CampBuitException();
+            }
+            int codiGrup = llista_grups.get(index).getID();
+            AlumneEntity alumne = new AlumneEntity(alum.getCodiAl(), nomAl.getText(), dniAl.getText(), codiGrup);
+            AlumneTable alumTable = new AlumneTable();
+            BDConnection bdCon;
             bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
             alumTable.setConnection(bdCon);
             alumTable.Update(alumne);
@@ -154,6 +158,9 @@ public class ModificarAlumne extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "ERROR, l'alumne amb aquest codi ja existeix",
+                "ERROR", JOptionPane.WARNING_MESSAGE);
+        } catch (CampBuitException ex) {
+            JOptionPane.showMessageDialog(null, "ERROR, un dels camps és buit",
                 "ERROR", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed

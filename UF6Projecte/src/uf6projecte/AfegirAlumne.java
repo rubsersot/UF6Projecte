@@ -6,6 +6,8 @@ package uf6projecte;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import static uf6projecte.UF6Projecte.BD_NAME;
@@ -160,12 +162,16 @@ public class AfegirAlumne extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int index = llista_grups_afegir.getSelectedIndex();
-        int codiGrup = llista_grups.get(index).getID();
-        AlumneEntity alumne = new AlumneEntity(Integer.parseInt(codiAl.getText()), nomAl.getText(), dniAl.getText(), codiGrup);
-        AlumneTable alumTable = new AlumneTable();
-        BDConnection bdCon;
         try {
+            int index = llista_grups_afegir.getSelectedIndex();
+            if(codiAl.getText().equals("") || nomAl.getText().equals("")
+                    || dniAl.getText().equals("") || index == -1){
+                throw new CampBuitException();
+            }
+            int codiGrup = llista_grups.get(index).getID();
+            AlumneEntity alumne = new AlumneEntity(Integer.parseInt(codiAl.getText()), nomAl.getText(), dniAl.getText(), codiGrup);
+            AlumneTable alumTable = new AlumneTable();
+            BDConnection bdCon;
             bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
             alumTable.setConnection(bdCon);
             alumTable.Insert(alumne);
@@ -177,6 +183,9 @@ public class AfegirAlumne extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "ERROR, l'alumne amb aquest codi ja existeix",
+                "ERROR", JOptionPane.WARNING_MESSAGE);
+        } catch (CampBuitException ex) {
+            JOptionPane.showMessageDialog(null, "ERROR, un dels camps és buit",
                 "ERROR", JOptionPane.WARNING_MESSAGE);
         }
         
