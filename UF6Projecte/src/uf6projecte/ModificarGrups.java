@@ -42,7 +42,7 @@ public class ModificarGrups extends javax.swing.JFrame {
             BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
             gpTable.setConnection(bdCon);
             isOpen = true;
-            llista_grups = gpTable.GetAll();//obtiene todos los grupos existentes
+            llista_grups = gpTable.GetAll();
             index = llista_grups.indexOf(grups);
             setResizable(false);
             initComponents();
