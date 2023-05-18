@@ -25,9 +25,7 @@ public class VentanaGrups extends javax.swing.JFrame {
     private static GrupTable grupTab;
     private static ArrayList<GrupEntity> llista_Grups;
 
-    /**
-     * Creates new form VentanaAlumnes
-     */
+    
     public VentanaGrups() {
 
         try {
@@ -226,7 +224,7 @@ public class VentanaGrups extends javax.swing.JFrame {
 
     private void botoSeguentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoSeguentActionPerformed
         if (contadorGrups >= llista_Grups.size() - 1) {
-            JOptionPane.showMessageDialog(null, "No hi ha alumnes posteriors a aquest",
+            JOptionPane.showMessageDialog(null, "No hi ha grups posteriors a aquest",
                     "ERROR", JOptionPane.INFORMATION_MESSAGE);
         } else {
             ++contadorGrups;
@@ -237,7 +235,7 @@ public class VentanaGrups extends javax.swing.JFrame {
 
     private void botoAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoAnteriorActionPerformed
         if (contadorGrups == 0) {
-            JOptionPane.showMessageDialog(null, "No hi ha alumnes anteriors a aquest",
+            JOptionPane.showMessageDialog(null, "No hi ha grups anteriors a aquest",
                     "ERROR", JOptionPane.INFORMATION_MESSAGE);
         } else {
             --contadorGrups;
@@ -271,12 +269,12 @@ public class VentanaGrups extends javax.swing.JFrame {
     private void esborrarGrupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esborrarGrupActionPerformed
         try {
             if (llista_Grups.size() == 1) {
-                JOptionPane.showMessageDialog(null, "No es pot esborrar quan només queda un alumne",
+                JOptionPane.showMessageDialog(null, "No es pot esborrar quan només queda un grup",
                         "Esborrar", JOptionPane.ERROR_MESSAGE);
             } else {
                 GrupEntity esborrar = llista_Grups.get(contadorGrups);
                 grupTab.Delete(esborrar);
-                JOptionPane.showMessageDialog(null, "Alumne esborrat",
+                JOptionPane.showMessageDialog(null, "Grup esborrat",
                         "Esborrar", JOptionPane.INFORMATION_MESSAGE);
                 llista_Grups.remove(contadorGrups);
                 --contadorGrups;
