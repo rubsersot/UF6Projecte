@@ -21,6 +21,7 @@ import static uf6projecte.UF6Projecte.USER;
  */
 public class VentanaAlumnes extends javax.swing.JFrame {
     
+    public static boolean isOpen = false;
     private static int contadorAlumnes = 0;
     private static AlumneTable alumTab;
     private static ArrayList<AlumneEntity> llista_alumnes;
@@ -30,6 +31,7 @@ public class VentanaAlumnes extends javax.swing.JFrame {
     public VentanaAlumnes() {
         
         try {
+            isOpen = true;
             alumTab = new AlumneTable();
             BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
             alumTab.setConnection(bdCon);
@@ -83,6 +85,11 @@ public class VentanaAlumnes extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel1.setText("Alumnes");
 
@@ -164,8 +171,7 @@ public class VentanaAlumnes extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nomAl)
                             .addComponent(dniAl)
-                            .addComponent(codiAl))
-                        .addGap(1, 1, 1))
+                            .addComponent(codiAl)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -273,6 +279,10 @@ public class VentanaAlumnes extends javax.swing.JFrame {
             Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        isOpen = false;
+    }//GEN-LAST:event_formWindowClosed
 
     public void actualitzarMostrar(){
         codiAl.setText(Integer.toString(llista_alumnes.get(contadorAlumnes).getCodiAl()));

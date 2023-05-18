@@ -217,8 +217,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botoObrirAlumnesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoObrirAlumnesActionPerformed
+        if(!VentanaAlumnes.isOpen){
             VentanaAlumnes ventana = new VentanaAlumnes();
             ventana.setVisible(true);
+            ventana.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        }    
     }//GEN-LAST:event_botoObrirAlumnesActionPerformed
 
     private void botoSeguentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoSeguentActionPerformed
