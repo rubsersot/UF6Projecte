@@ -31,7 +31,7 @@ public class UF6Projecte {
             //Crear la connexió a la BD
             BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
             
-            VentanaPrincipal ventana = new VentanaPrincipal();
+            VentanaGrups ventana = new VentanaGrups();
             ventana.setVisible(true);
             //Crear l'objecte de la taula persona i assignar la connexió
             GrupTable pt = new GrupTable();

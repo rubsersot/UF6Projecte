@@ -19,7 +19,7 @@ import static uf6projecte.UF6Projecte.USER;
  *
  * @author ausias
  */
-public class VentanaPrincipal extends javax.swing.JFrame {
+public class VentanaGrups extends javax.swing.JFrame {
 
     private static int contadorGrups = 0;
     private static GrupTable grupTab;
@@ -28,13 +28,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form VentanaAlumnes
      */
-    public VentanaPrincipal() {
+    public VentanaGrups() {
 
         try {
             grupTab = new GrupTable();
             BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
             grupTab.setConnection(bdCon);
-            VentanaPrincipal.llista_Grups = grupTab.GetAll();
+            VentanaGrups.llista_Grups = grupTab.GetAll();
 
         } catch (NullConnectionException | SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -68,9 +68,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         botoAnterior = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        modificarGrup = new javax.swing.JButton();
+        afegirGrup = new javax.swing.JButton();
+        esborrarGrup = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,24 +113,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLabel5.setText("Quota");
 
-        jButton1.setText("Modificar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        modificarGrup.setText("Modificar");
+        modificarGrup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                modificarGrupActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Afegir");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        afegirGrup.setText("Afegir");
+        afegirGrup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                afegirGrupActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Esborrar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        esborrarGrup.setText("Esborrar");
+        esborrarGrup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                esborrarGrupActionPerformed(evt);
             }
         });
 
@@ -166,11 +166,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                                 .addGap(113, 113, 113))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jButton2)
+                                    .addComponent(afegirGrup)
                                     .addGap(38, 38, 38)
-                                    .addComponent(jButton1)
+                                    .addComponent(modificarGrup)
                                     .addGap(33, 33, 33)
-                                    .addComponent(jButton3)
+                                    .addComponent(esborrarGrup)
                                     .addGap(62, 62, 62))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(botoAnterior)
@@ -201,9 +201,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addComponent(quotaGrup))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1))
+                    .addComponent(afegirGrup)
+                    .addComponent(esborrarGrup)
+                    .addComponent(modificarGrup))
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botoSeguent)
@@ -245,22 +245,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botoAnteriorActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (!ModificarAlumne.isOpen) {
-            ModificarAlumne modAl = new ModificarAlumne();
-            modAl.setVisible(true);
-            modAl.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    private void modificarGrupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarGrupActionPerformed
+        if (!ModificarGrups.isOpen) {
+            ModificarGrups modGr = new ModificarGrups();
+            modGr.setVisible(true);
+            modGr.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_modificarGrupActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (!AfegirAlumne.isOpen) {
-            AfegirAlumne afegirAl = new AfegirAlumne();
-            afegirAl.setVisible(true);
-            afegirAl.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    private void afegirGrupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_afegirGrupActionPerformed
+        if (!AfegirGrups.isOpen) {
+            AfegirGrups afegirGr = new AfegirGrups();
+            afegirGr.setVisible(true);
+            afegirGr.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_afegirGrupActionPerformed
     public void actualitzarMostrar() {
         IDGrup.setText(Integer.toString(llista_Grups.get(contadorGrups).getID()));
         nomGr.setText(llista_Grups.get(contadorGrups).getNom());
@@ -268,7 +268,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         quotaGrup.setText(Float.toString(llista_Grups.get(contadorGrups).getQuota()));
         
     }
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void esborrarGrupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esborrarGrupActionPerformed
         try {
             if (llista_Grups.size() == 1) {
                 JOptionPane.showMessageDialog(null, "No es pot esborrar quan només queda un alumne",
@@ -286,7 +286,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_esborrarGrupActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,38 +305,40 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaGrups.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaGrups.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaGrups.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaGrups.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaPrincipal().setVisible(true);
+                new VentanaGrups().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IDGrup;
+    private javax.swing.JButton afegirGrup;
     private javax.swing.JButton botoAnterior;
     private javax.swing.JButton botoObrirAlumnes;
     private javax.swing.JButton botoSeguent;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton esborrarGrup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton modificarGrup;
     private javax.swing.JLabel nomGr;
     private javax.swing.JLabel numAlumnes;
     private javax.swing.JLabel quotaGrup;
