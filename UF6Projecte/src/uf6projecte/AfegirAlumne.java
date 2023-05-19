@@ -161,7 +161,6 @@ public class AfegirAlumne extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
     private static int confirmarOperacio(){
         int result = 0;
         String[] options = {"Si", "No"}; 
@@ -175,13 +174,17 @@ public class AfegirAlumne extends javax.swing.JFrame {
                options,  //button titles
                options[0] //default button
             );
-            if(opcio == JOptionPane.YES_OPTION){
-               result = 0;
-            }else if (opcio == JOptionPane.NO_OPTION){
-               result = 1;
-            }else {
-               result = 2;
-            }
+        switch (opcio) {
+            case JOptionPane.YES_OPTION:
+                result = 0;
+                break;
+            case JOptionPane.NO_OPTION:
+                result = 1;
+                break;
+            default:
+                result = 2;
+                break;
+        }
             return opcio;
     }
     

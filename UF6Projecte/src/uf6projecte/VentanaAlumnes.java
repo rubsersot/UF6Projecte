@@ -48,6 +48,10 @@ public class VentanaAlumnes extends javax.swing.JFrame {
         return llista_alumnes.get(contadorAlumnes);
     }
 
+    public static int getNumAlumnes() {
+        return llista_alumnes.size();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -260,19 +264,53 @@ public class VentanaAlumnes extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private static int confirmarOperacio(){
+        int result = 0;
+        String[] options = {"Si", "No"}; 
+            int opcio = JOptionPane.showOptionDialog(
+               null,
+               "Estàs segur de realitzar la operació?", 
+               "Comfirmació",            
+               JOptionPane.YES_NO_OPTION,
+               JOptionPane.QUESTION_MESSAGE,
+               null,     //no custom icon
+               options,  //button titles
+               options[0] //default button
+            );
+        switch (opcio) {
+            case JOptionPane.YES_OPTION:
+                result = 0;
+                break;
+            case JOptionPane.NO_OPTION:
+                result = 1;
+                break;
+            default:
+                result = 2;
+                break;
+        }
+            return opcio;
+    }
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
-            if(llista_alumnes.size() == 1){
-                JOptionPane.showMessageDialog(null, "No es pot esborrar quan només queda un alumne",
-                    "Esborrar", JOptionPane.ERROR_MESSAGE);
-            } else{
-                AlumneEntity esborrar = llista_alumnes.get(contadorAlumnes);
-                alumTab.Delete(esborrar);
-                JOptionPane.showMessageDialog(null, "Alumne esborrat",
-                    "Esborrar", JOptionPane.INFORMATION_MESSAGE);
-                llista_alumnes.remove(contadorAlumnes);
-                --contadorAlumnes;
+            int opcio = confirmarOperacio();
+            if(opcio == 0){
+                if(llista_alumnes.size() == 1){
+                    JOptionPane.showMessageDialog(null, "No es pot esborrar quan només queda un alumne",
+                        "Esborrar", JOptionPane.ERROR_MESSAGE);
+                } else{
+                    AlumneEntity esborrar = llista_alumnes.get(contadorAlumnes);
+                    alumTab.Delete(esborrar);
+                    JOptionPane.showMessageDialog(null, "Alumne esborrat",
+                        "Esborrar", JOptionPane.INFORMATION_MESSAGE);
+                    llista_alumnes.remove(contadorAlumnes);
+                    --contadorAlumnes;
+                }
+            } else if(opcio == 1){
+                JOptionPane.showMessageDialog(null, "Operació cancelada",
+                "ERROR", JOptionPane.WARNING_MESSAGE);
             }
+            
         } catch (NullConnectionException ex) {
             Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
