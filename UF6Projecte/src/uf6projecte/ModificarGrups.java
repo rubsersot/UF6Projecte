@@ -64,12 +64,17 @@ public class ModificarGrups extends javax.swing.JFrame {
         nomGrup = new javax.swing.JTextField(grups.getNom());
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        quotaGrup = new javax.swing.JTextField(Float.parseFloat(grups.getQuota()));
+        quotaGrup = new javax.swing.JTextField(Float.toString(grups.getQuota()));
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         nAlumnesGrup = new javax.swing.JTextField(grups.getnumAlumnes());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         nomGrup.setText("Introdueix el nom");
 
@@ -166,6 +171,10 @@ public class ModificarGrups extends javax.swing.JFrame {
                     "ERROR", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        isOpen = false;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

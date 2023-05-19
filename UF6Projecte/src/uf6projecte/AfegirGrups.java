@@ -64,6 +64,11 @@ public class AfegirGrups extends javax.swing.JFrame {
         nAlumnesGr = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         nomGrp.setText("Introdueix el nom");
 
@@ -179,6 +184,10 @@ public class AfegirGrups extends javax.swing.JFrame {
     private void codiGrupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codiGrupActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_codiGrupActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        isOpen = false;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
