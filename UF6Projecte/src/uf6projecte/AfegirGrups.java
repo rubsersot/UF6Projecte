@@ -25,7 +25,8 @@ public class AfegirGrups extends javax.swing.JFrame {
     /**
      * Creates new form AfegirGrups
      */
-    public static boolean isOpen = false;   
+    public static boolean isOpen = false;
+
     /**
      * Creates new form AfegirAlumne
      */
@@ -33,15 +34,38 @@ public class AfegirGrups extends javax.swing.JFrame {
         try {
             GrupTable gpTable = new GrupTable();
             BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
-            gpTable.setConnection(bdCon);            
+            gpTable.setConnection(bdCon);
             isOpen = true;
             setResizable(false);
-            
+
             initComponents();
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println(ex.getMessage());
-        } 
+        }
+    }
+
+    private static int confirmarOperacio() {
+        int result = 0;
+        String[] options = {"Si", "No"};
+        int opcio = JOptionPane.showOptionDialog(
+                null,
+                "Estàs segur de realitzar la operació?",
+                "Comfirmació",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, //no custom icon
+                options, //button titles
+                options[0] //default button
+        );
+        if (opcio == JOptionPane.YES_OPTION) {
+            result = 0;
+        } else if (opcio == JOptionPane.NO_OPTION) {
+            result = 1;
+        } else {
+            result = 2;
+        }
+        return opcio;
     }
 
     /**
@@ -105,13 +129,14 @@ public class AfegirGrups extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(jLabel4))
+                        .addGap(48, 48, 48)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(codiGrup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(nomGrp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -125,25 +150,23 @@ public class AfegirGrups extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(codiGrup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(nomGrp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addContainerGap(67, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(codiGrup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nomGrp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(quotaGr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(12, 12, 12)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(nAlumnesGr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(104, 104, 104)
+                    .addComponent(nAlumnesGr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(88, 88, 88)
                 .addComponent(afegirGrup)
                 .addGap(23, 23, 23))
         );
@@ -152,31 +175,38 @@ public class AfegirGrups extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void afegirGrupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_afegirGrupActionPerformed
-        try {  
-            
-            if(codiGrup.getText().equals("") || nomGrp.getText().equals("")
-                    || nAlumnesGr.getText().equals("") || quotaGr.getText().equals("")){
-                throw new CampBuitException();
+        try {
+
+            int opcio = confirmarOperacio();
+            if (opcio == 0) {
+                if (codiGrup.getText().equals("") || nomGrp.getText().equals("")
+                        || nAlumnesGr.getText().equals("") || quotaGr.getText().equals("")) {
+                    throw new CampBuitException();
+                }
+
+                GrupEntity grups = new GrupEntity(Integer.parseInt(codiGrup.getText()), nomGrp.getText(), Integer.parseInt(nAlumnesGr.getText()), Float.parseFloat(quotaGr.getText()));
+                GrupTable grTable = new GrupTable();
+                BDConnection bdCon;
+                bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
+                grTable.setConnection(bdCon);
+                grTable.Insert(grups);
+                JOptionPane.showMessageDialog(null, "Grup afegit",
+                        "Afegir", JOptionPane.INFORMATION_MESSAGE);
+                VentanaGrups ventGrups = new VentanaGrups();
+                ventGrups.actualitzarMostrar();
+            } else if (opcio == 1) {
+                JOptionPane.showMessageDialog(null, "Operació cancelada",
+                        "ERROR", JOptionPane.WARNING_MESSAGE);
             }
-            
-            GrupEntity grups = new GrupEntity(Integer.parseInt(codiGrup.getText()), nomGrp.getText(),  Integer.parseInt(nAlumnesGr.getText()), Float.parseFloat(quotaGr.getText()));
-            GrupTable grTable = new GrupTable();
-            BDConnection bdCon;
-            bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
-            grTable.setConnection(bdCon);
-            grTable.Insert(grups);
-            JOptionPane.showMessageDialog(null, "Grup afegit",
-                "Afegir", JOptionPane.INFORMATION_MESSAGE);
-            VentanaGrups ventGrups = new VentanaGrups();
-            ventGrups.actualitzarMostrar();
+
         } catch (ClassNotFoundException | NullConnectionException ex) {
             System.out.println(ex.getMessage());
-        } catch (SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "ERROR, el Grup amb aquest codi ja existeix",
-                "ERROR", JOptionPane.WARNING_MESSAGE);
+                    "ERROR", JOptionPane.WARNING_MESSAGE);
         } catch (CampBuitException ex) {
             JOptionPane.showMessageDialog(null, "ERROR, un dels camps és buit",
-                "ERROR", JOptionPane.WARNING_MESSAGE);
+                    "ERROR", JOptionPane.WARNING_MESSAGE);
         }
 
     }//GEN-LAST:event_afegirGrupActionPerformed

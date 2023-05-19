@@ -28,28 +28,49 @@ public class ModificarGrups extends javax.swing.JFrame {
     public static boolean isOpen = false;
     private GrupEntity grups;
     private ArrayList<GrupEntity> llista_grups;
-    private int index;
-    
 
     /**
      * Creates new form AfegirAlumne
      */
-    public ModificarGrups()  {
+    public ModificarGrups() {
         try {
-            
+
             grups = VentanaGrups.getGrupActual();
             GrupTable gpTable = new GrupTable();
             BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
             gpTable.setConnection(bdCon);
             isOpen = true;
             llista_grups = gpTable.GetAll();
-            index = llista_grups.indexOf(grups);
+
             setResizable(false);
             initComponents();
 
-        } catch (SQLException | NullConnectionException |ClassNotFoundException ex) {
+        } catch (SQLException | NullConnectionException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    private static int confirmarOperacio() {
+        int result = 0;
+        String[] options = {"Si", "No"};
+        int opcio = JOptionPane.showOptionDialog(
+                null,
+                "Estàs segur de realitzar la operació?",
+                "Comfirmació",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, //no custom icon
+                options, //button titles
+                options[0] //default button
+        );
+        if (opcio == JOptionPane.YES_OPTION) {
+            result = 0;
+        } else if (opcio == JOptionPane.NO_OPTION) {
+            result = 1;
+        } else {
+            result = 2;
+        }
+        return opcio;
     }
 
     /**
@@ -145,22 +166,28 @@ public class ModificarGrups extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-
-            if (nomGrup.getText().equals("") || quotaGrup.getText().equals("")
-                    || nAlumnesGrup.getText().equals("")) {
-                throw new CampBuitException();
+            int opcio = confirmarOperacio();
+            if (opcio == 0) {
+                if (nomGrup.getText().equals("") || quotaGrup.getText().equals("")
+                        || nAlumnesGrup.getText().equals("")) {
+                    throw new CampBuitException();
+                }
+                int codiGrup = grups.getID();
+                GrupEntity grups = new GrupEntity(codiGrup, nomGrup.getText(), Integer.parseInt(nAlumnesGrup.getText()), Float.parseFloat(quotaGrup.getText()));
+                GrupTable grupTable = new GrupTable();
+                BDConnection bdCon;
+                bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
+                grupTable.setConnection(bdCon);
+                grupTable.Update(grups);
+                JOptionPane.showMessageDialog(null, "Grup modificat",
+                        "Modificar", JOptionPane.INFORMATION_MESSAGE);
+                VentanaGrups ventGrups = new VentanaGrups();
+                ventGrups.actualitzarMostrar();
+            } else if (opcio == 1) {
+                JOptionPane.showMessageDialog(null, "Operació cancelada",
+                        "ERROR", JOptionPane.WARNING_MESSAGE);
             }
-            int codiGrup = llista_grups.get(index).getID();
-            GrupEntity grups = new GrupEntity(codiGrup, nomGrup.getText(), Integer.parseInt(nAlumnesGrup.getText()), Float.parseFloat(quotaGrup.getText()));
-            GrupTable grupTable = new GrupTable();
-            BDConnection bdCon;
-            bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
-            grupTable.setConnection(bdCon);
-            grupTable.Update(grups);
-            JOptionPane.showMessageDialog(null, "Grup modificat",
-                    "Modificar", JOptionPane.INFORMATION_MESSAGE);
-            VentanaGrups ventGrups = new VentanaGrups();
-            ventGrups.actualitzarMostrar();
+
         } catch (ClassNotFoundException | NullConnectionException ex) {
             System.out.println(ex.getMessage());
         } catch (SQLException e) {

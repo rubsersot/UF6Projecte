@@ -44,6 +44,28 @@ public class VentanaGrups extends javax.swing.JFrame {
     public static GrupEntity getGrupActual() {
         return llista_Grups.get(contadorGrups);
     }
+    private static int confirmarOperacio() {
+        int result = 0;
+        String[] options = {"Si", "No"};
+        int opcio = JOptionPane.showOptionDialog(
+                null,
+                "Estàs segur de realitzar la operació?",
+                "Comfirmació",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, //no custom icon
+                options, //button titles
+                options[0] //default button
+        );
+        if (opcio == JOptionPane.YES_OPTION) {
+            result = 0;
+        } else if (opcio == JOptionPane.NO_OPTION) {
+            result = 1;
+        } else {
+            result = 2;
+        }
+        return opcio;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -268,7 +290,9 @@ public class VentanaGrups extends javax.swing.JFrame {
     }
     private void esborrarGrupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esborrarGrupActionPerformed
         try {
-            if (llista_Grups.size() == 1) {
+            int opcio = confirmarOperacio();
+            if (opcio == 0){
+                if (llista_Grups.size() == 1) {
                 JOptionPane.showMessageDialog(null, "No es pot esborrar quan només queda un grup",
                         "Esborrar", JOptionPane.ERROR_MESSAGE);
             } else {
@@ -279,6 +303,11 @@ public class VentanaGrups extends javax.swing.JFrame {
                 llista_Grups.remove(contadorGrups);
                 --contadorGrups;
             }
+            } else if(opcio == 1){
+                JOptionPane.showMessageDialog(null, "Operació cancelada",
+                "ERROR", JOptionPane.WARNING_MESSAGE);
+            }
+            
         } catch (NullConnectionException ex) {
             Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
