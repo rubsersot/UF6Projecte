@@ -21,7 +21,7 @@ import static uf6projecte.UF6Projecte.USER;
  */
 public class VentanaAlumnes extends javax.swing.JFrame {
     
-    public static boolean isOpen = false;
+    public static boolean isOpenAlumnes = false;
     private static int contadorAlumnes = 0;
     private static AlumneTable alumTab;
     private static ArrayList<AlumneEntity> llista_alumnes;
@@ -31,12 +31,11 @@ public class VentanaAlumnes extends javax.swing.JFrame {
     public VentanaAlumnes() {
         
         try {
-            isOpen = true;
             alumTab = new AlumneTable();
             BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
             alumTab.setConnection(bdCon);
-            VentanaAlumnes.llista_alumnes = alumTab.GetAll();
-            
+            llista_alumnes = alumTab.GetAll();
+            isOpenAlumnes = true;
         } catch (NullConnectionException | SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
@@ -72,6 +71,7 @@ public class VentanaAlumnes extends javax.swing.JFrame {
         codiGrupAl = new javax.swing.JLabel();
         botoSeguent = new javax.swing.JButton();
         botoAnterior = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -144,54 +144,69 @@ public class VentanaAlumnes extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("Actualitzar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(botoAnterior)
-                        .addGap(33, 33, 33)
-                        .addComponent(botoSeguent)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(30, 30, 30)
-                .addComponent(jButton3)
-                .addGap(102, 102, 102))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 187, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nomAl)
-                            .addComponent(dniAl)
-                            .addComponent(codiAl)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(31, 31, 31)
+                        .addComponent(jButton3)
+                        .addGap(96, 96, 96))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(30, 30, 30)
-                        .addComponent(codiGrupAl)))
-                .addGap(172, 172, 172))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(botoAnterior)
+                                .addGap(18, 18, 18)
+                                .addComponent(botoSeguent)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton4)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addGap(43, 364, Short.MAX_VALUE)))))
+                .addGap(48, 48, 48))
             .addGroup(layout.createSequentialGroup()
-                .addGap(242, 242, 242)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(116, 116, 116)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nomAl)
+                                    .addComponent(dniAl)
+                                    .addComponent(codiAl)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addGap(30, 30, 30)
+                                .addComponent(codiGrupAl))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(220, 220, 220)
+                        .addComponent(jLabel1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel1)
-                .addGap(31, 31, 31)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(codiAl))
@@ -215,7 +230,8 @@ public class VentanaAlumnes extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botoSeguent)
-                    .addComponent(botoAnterior))
+                    .addComponent(botoAnterior)
+                    .addComponent(jButton4))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -252,7 +268,7 @@ public class VentanaAlumnes extends javax.swing.JFrame {
     }//GEN-LAST:event_botoAnteriorActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(!AfegirAlumne.isOpen){
+        if(!AfegirAlumne.isOpenAfegirAlumnes){
             AfegirAlumne afegirAl = new AfegirAlumne();
             afegirAl.setVisible(true);
             afegirAl.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -300,7 +316,8 @@ public class VentanaAlumnes extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Alumne esborrat",
                         "Esborrar", JOptionPane.INFORMATION_MESSAGE);
                     llista_alumnes.remove(contadorAlumnes);
-                    --contadorAlumnes;
+                    contadorAlumnes = 0;
+                    actualitzarMostrar();
                 }
             } else if(opcio == 1){
                 JOptionPane.showMessageDialog(null, "Operació cancelada",
@@ -315,8 +332,24 @@ public class VentanaAlumnes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        isOpen = false;
+        isOpenAlumnes = false;
     }//GEN-LAST:event_formWindowClosed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            alumTab = new AlumneTable();
+            BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
+            alumTab.setConnection(bdCon);
+            llista_alumnes = alumTab.GetAll();
+            actualitzarMostrar();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullConnectionException ex) {
+            Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     public void actualitzarMostrar(){
         codiAl.setText(Integer.toString(llista_alumnes.get(contadorAlumnes).getCodiAl()));
@@ -369,6 +402,7 @@ public class VentanaAlumnes extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

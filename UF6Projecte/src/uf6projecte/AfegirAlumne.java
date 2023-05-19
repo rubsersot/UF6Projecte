@@ -22,7 +22,7 @@ import static uf6projecte.UF6Projecte.USER;
  */
 public class AfegirAlumne extends javax.swing.JFrame {
 
-    public static boolean isOpen = false;
+    public static boolean isOpenAfegirAlumnes = false;
     private ArrayList<GrupEntity> llista_grups;
     
     /**
@@ -34,10 +34,11 @@ public class AfegirAlumne extends javax.swing.JFrame {
             BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
             gpTable.setConnection(bdCon);
             llista_grups = gpTable.GetAll();
-            isOpen = true;
+            
             setResizable(false);
             
             initComponents();
+            isOpenAfegirAlumnes = true;
             llista_grups_afegir.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         } catch (ClassNotFoundException | SQLException | NullConnectionException ex) {
             System.out.println(ex.getMessage());
@@ -207,8 +208,6 @@ public class AfegirAlumne extends javax.swing.JFrame {
                 alumTable.Insert(alumne);
                 JOptionPane.showMessageDialog(null, "Alumne afegit",
                     "Afegir", JOptionPane.INFORMATION_MESSAGE);
-                VentanaAlumnes ventAlum = new VentanaAlumnes();
-                ventAlum.actualitzarMostrar();
             } else if(opcio == 1){
                 JOptionPane.showMessageDialog(null, "Operació cancelada",
                 "ERROR", JOptionPane.WARNING_MESSAGE);
@@ -227,7 +226,7 @@ public class AfegirAlumne extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        isOpen = false;
+        isOpenAfegirAlumnes = false;
     }//GEN-LAST:event_formWindowClosed
 
     /**

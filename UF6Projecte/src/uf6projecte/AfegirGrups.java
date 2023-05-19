@@ -25,7 +25,7 @@ public class AfegirGrups extends javax.swing.JFrame {
     /**
      * Creates new form AfegirGrups
      */
-    public static boolean isOpen = false;
+    public static boolean isOpenAfegirGrups = false;
 
     /**
      * Creates new form AfegirAlumne
@@ -35,7 +35,7 @@ public class AfegirGrups extends javax.swing.JFrame {
             GrupTable gpTable = new GrupTable();
             BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
             gpTable.setConnection(bdCon);
-            isOpen = true;
+            isOpenAfegirGrups = true;
             setResizable(false);
 
             initComponents();
@@ -176,7 +176,6 @@ public class AfegirGrups extends javax.swing.JFrame {
 
     private void afegirGrupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_afegirGrupActionPerformed
         try {
-
             int opcio = confirmarOperacio();
             if (opcio == 0) {
                 if (codiGrup.getText().equals("") || nomGrp.getText().equals("")
@@ -207,6 +206,9 @@ public class AfegirGrups extends javax.swing.JFrame {
         } catch (CampBuitException ex) {
             JOptionPane.showMessageDialog(null, "ERROR, un dels camps és buit",
                     "ERROR", JOptionPane.WARNING_MESSAGE);
+        } catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "ERROR, un dels números no té el format correcte",
+                    "ERROR", JOptionPane.WARNING_MESSAGE);
         }
 
     }//GEN-LAST:event_afegirGrupActionPerformed
@@ -216,7 +218,7 @@ public class AfegirGrups extends javax.swing.JFrame {
     }//GEN-LAST:event_codiGrupActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        isOpen = false;
+        isOpenAfegirGrups = false;
     }//GEN-LAST:event_formWindowClosed
 
     /**

@@ -91,6 +91,7 @@ public class VentanaGrups extends javax.swing.JFrame {
         modificarGrup = new javax.swing.JButton();
         afegirGrup = new javax.swing.JButton();
         esborrarGrup = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,7 +112,7 @@ public class VentanaGrups extends javax.swing.JFrame {
 
         quotaGrup.setText(Float.toString(llista_Grups.get(contadorGrups).getQuota()));
 
-        jLabel2.setText("Codi Alumne:");
+        jLabel2.setText("Codi Grup:");
 
         botoSeguent.setText("Següent Grup");
         botoSeguent.addActionListener(new java.awt.event.ActionListener() {
@@ -151,6 +152,13 @@ public class VentanaGrups extends javax.swing.JFrame {
         esborrarGrup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 esborrarGrupActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Actualitzar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -194,9 +202,11 @@ public class VentanaGrups extends javax.swing.JFrame {
                                     .addGap(62, 62, 62))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(botoAnterior)
-                                    .addGap(44, 44, 44)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(botoSeguent)
-                                    .addGap(42, 42, 42)))))))
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jButton1)
+                                    .addContainerGap()))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +237,8 @@ public class VentanaGrups extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botoSeguent)
-                    .addComponent(botoAnterior))
+                    .addComponent(botoAnterior)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(botoObrirAlumnes)
                 .addContainerGap())
@@ -237,11 +248,21 @@ public class VentanaGrups extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botoObrirAlumnesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoObrirAlumnesActionPerformed
-        if(!VentanaAlumnes.isOpen){
-            VentanaAlumnes ventana = new VentanaAlumnes();
-            ventana.setVisible(true);
-            ventana.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        }    
+        try{
+            if(!VentanaAlumnes.isOpenAlumnes){
+                VentanaAlumnes ventana = new VentanaAlumnes();
+                ventana.setVisible(true);
+                ventana.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            } 
+        } catch(IndexOutOfBoundsException e){
+            JOptionPane.showMessageDialog(null, "No hi ha cap alumne creat, s'ha de inserir un directament",
+                    "ERROR", JOptionPane.INFORMATION_MESSAGE);
+            AfegirAlumne afegirAl = new AfegirAlumne();
+            afegirAl.setVisible(true);
+            afegirAl.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            VentanaAlumnes.isOpenAlumnes = false;
+        }
+        
     }//GEN-LAST:event_botoObrirAlumnesActionPerformed
 
     private void botoSeguentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoSeguentActionPerformed
@@ -274,7 +295,7 @@ public class VentanaGrups extends javax.swing.JFrame {
     }//GEN-LAST:event_modificarGrupActionPerformed
 
     private void afegirGrupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_afegirGrupActionPerformed
-        if (!AfegirGrups.isOpen) {
+        if (!AfegirGrups.isOpenAfegirGrups) {
             AfegirGrups afegirGr = new AfegirGrups();
             afegirGr.setVisible(true);
             afegirGr.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -301,7 +322,8 @@ public class VentanaGrups extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Grup esborrat",
                         "Esborrar", JOptionPane.INFORMATION_MESSAGE);
                 llista_Grups.remove(contadorGrups);
-                --contadorGrups;
+                contadorGrups = 0;
+                actualitzarMostrar();
             }
             } else if(opcio == 1){
                 JOptionPane.showMessageDialog(null, "Operació cancelada",
@@ -314,6 +336,22 @@ public class VentanaGrups extends javax.swing.JFrame {
             Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_esborrarGrupActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            grupTab = new GrupTable();
+            BDConnection bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
+            grupTab.setConnection(bdCon);
+            llista_Grups = grupTab.GetAll();
+            actualitzarMostrar();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullConnectionException ex) {
+            Logger.getLogger(VentanaAlumnes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -360,6 +398,7 @@ public class VentanaGrups extends javax.swing.JFrame {
     private javax.swing.JButton botoObrirAlumnes;
     private javax.swing.JButton botoSeguent;
     private javax.swing.JButton esborrarGrup;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
