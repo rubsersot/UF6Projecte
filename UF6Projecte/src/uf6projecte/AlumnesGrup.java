@@ -53,8 +53,8 @@ public class AlumnesGrup extends javax.swing.JFrame {
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             public int getSize() { return llista_alumnes.size(); }
             public String getElementAt(int i) {
-                return llista_alumnes.get(i).getCodiAl() + "-"
-                + llista_alumnes.get(i).getNom() + "-" + llista_alumnes.get(i).getDNI();
+                return "Codi: " + llista_alumnes.get(i).getCodiAl() + ", Nom: "
+                + llista_alumnes.get(i).getNom() + ", DNI: " + llista_alumnes.get(i).getDNI();
             }
         });
         jScrollPane1.setViewportView(jList1);
