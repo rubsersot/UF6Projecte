@@ -91,6 +91,30 @@ public class GrupTable extends ORMTable {
         return resultList;
     }
     
+    public ArrayList<AlumneEntity> GetAllAlumnes(ORMEntity o) throws NullConnectionException, SQLException {
+
+        ArrayList<AlumneEntity> resultList = new ArrayList<>();
+
+        GrupEntity g = (GrupEntity) o;
+        Statement consulta = getBDConnection().getConnection().createStatement();
+        ResultSet resultat = consulta.executeQuery("SELECT * FROM ALUMNE WHERE codiGrup = " + g.getID());
+
+        while (resultat.next()) {
+            AlumneEntity alum = new AlumneEntity(
+                    resultat.getInt("codiAl"), 
+                    resultat.getString("nom"), 
+                    resultat.getString("DNI"), 
+                    g.getID());
+            resultList.add(alum);
+        }
+
+        //Tancar resultat i consulta
+        resultat.close();
+        consulta.close();
+
+        return resultList;
+    }
+    
 
     @Override
     public int Delete(ORMEntity o) throws NullConnectionException, SQLException {

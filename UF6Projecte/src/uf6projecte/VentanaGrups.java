@@ -92,8 +92,9 @@ public class VentanaGrups extends javax.swing.JFrame {
         afegirGrup = new javax.swing.JButton();
         esborrarGrup = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Grups");
 
@@ -162,6 +163,13 @@ public class VentanaGrups extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Mostrar Alumnes");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -173,12 +181,18 @@ public class VentanaGrups extends javax.swing.JFrame {
                         .addComponent(botoObrirAlumnes)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(201, 201, 201))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(51, 74, Short.MAX_VALUE)
+                        .addGap(0, 24, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(botoAnterior)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(botoSeguent)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(201, 201, 201))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
@@ -192,21 +206,15 @@ public class VentanaGrups extends javax.swing.JFrame {
                                     .addComponent(numAlumnes)
                                     .addComponent(IDGrup))
                                 .addGap(113, 113, 113))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(afegirGrup)
-                                    .addGap(38, 38, 38)
-                                    .addComponent(modificarGrup)
-                                    .addGap(33, 33, 33)
-                                    .addComponent(esborrarGrup)
-                                    .addGap(62, 62, 62))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(botoAnterior)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(botoSeguent)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jButton1)
-                                    .addContainerGap()))))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(afegirGrup)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(modificarGrup)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(esborrarGrup)
+                                .addGap(27, 27, 27))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,7 +241,8 @@ public class VentanaGrups extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(afegirGrup)
                     .addComponent(esborrarGrup)
-                    .addComponent(modificarGrup))
+                    .addComponent(modificarGrup)
+                    .addComponent(jButton2))
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botoSeguent)
@@ -353,6 +362,11 @@ public class VentanaGrups extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        AlumnesGrup alumGrup = new AlumnesGrup();
+        alumGrup.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -399,6 +413,7 @@ public class VentanaGrups extends javax.swing.JFrame {
     private javax.swing.JButton botoSeguent;
     private javax.swing.JButton esborrarGrup;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
