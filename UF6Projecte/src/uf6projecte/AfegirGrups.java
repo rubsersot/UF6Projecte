@@ -167,8 +167,8 @@ public class AfegirGrups extends javax.swing.JFrame {
             grTable.Insert(grups);
             JOptionPane.showMessageDialog(null, "Grup afegit",
                 "Afegir", JOptionPane.INFORMATION_MESSAGE);
-            VentanaAlumnes ventAlum = new VentanaAlumnes();
-            ventAlum.actualitzarMostrar();
+            VentanaGrups ventGrups = new VentanaGrups();
+            ventGrups.actualitzarMostrar();
         } catch (ClassNotFoundException | NullConnectionException ex) {
             System.out.println(ex.getMessage());
         } catch (SQLException e){

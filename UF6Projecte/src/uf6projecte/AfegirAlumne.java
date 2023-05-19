@@ -161,24 +161,56 @@ public class AfegirAlumne extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private static int confirmarOperacio(){
+        int result = 0;
+        String[] options = {"Si", "No"}; 
+            int opcio = JOptionPane.showOptionDialog(
+               null,
+               "Estàs segur de realitzar la operació?", 
+               "Comfirmació",            
+               JOptionPane.YES_NO_OPTION,
+               JOptionPane.QUESTION_MESSAGE,
+               null,     //no custom icon
+               options,  //button titles
+               options[0] //default button
+            );
+            if(opcio == JOptionPane.YES_OPTION){
+               result = 0;
+            }else if (opcio == JOptionPane.NO_OPTION){
+               result = 1;
+            }else {
+               result = 2;
+            }
+            return opcio;
+    }
+    
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            int index = llista_grups_afegir.getSelectedIndex();
-            if(codiAl.getText().equals("") || nomAl.getText().equals("")
-                    || dniAl.getText().equals("") || index == -1){
-                throw new CampBuitException();
+            int opcio = confirmarOperacio();
+            if (opcio == 0){
+                int index = llista_grups_afegir.getSelectedIndex();
+                if(codiAl.getText().equals("") || nomAl.getText().equals("")
+                        || dniAl.getText().equals("") || index == -1){
+                    throw new CampBuitException();
+                }
+                int codiGrup = llista_grups.get(index).getID();
+                AlumneEntity alumne = new AlumneEntity(Integer.parseInt(codiAl.getText()), nomAl.getText(), dniAl.getText(), codiGrup);
+                AlumneTable alumTable = new AlumneTable();
+                BDConnection bdCon;
+                bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
+                alumTable.setConnection(bdCon);
+                alumTable.Insert(alumne);
+                JOptionPane.showMessageDialog(null, "Alumne afegit",
+                    "Afegir", JOptionPane.INFORMATION_MESSAGE);
+                VentanaAlumnes ventAlum = new VentanaAlumnes();
+                ventAlum.actualitzarMostrar();
+            } else if(opcio == 1){
+                JOptionPane.showMessageDialog(null, "Operació cancelada",
+                "ERROR", JOptionPane.WARNING_MESSAGE);
             }
-            int codiGrup = llista_grups.get(index).getID();
-            AlumneEntity alumne = new AlumneEntity(Integer.parseInt(codiAl.getText()), nomAl.getText(), dniAl.getText(), codiGrup);
-            AlumneTable alumTable = new AlumneTable();
-            BDConnection bdCon;
-            bdCon = new BDConnection(URL, PORT, BD_NAME, USER, PWD);
-            alumTable.setConnection(bdCon);
-            alumTable.Insert(alumne);
-            JOptionPane.showMessageDialog(null, "Alumne afegit",
-                "Afegir", JOptionPane.INFORMATION_MESSAGE);
-            VentanaAlumnes ventAlum = new VentanaAlumnes();
-            ventAlum.actualitzarMostrar();
+            
         } catch (ClassNotFoundException | NullConnectionException ex) {
             System.out.println(ex.getMessage());
         } catch (SQLException e){

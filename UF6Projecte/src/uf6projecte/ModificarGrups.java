@@ -76,13 +76,13 @@ public class ModificarGrups extends javax.swing.JFrame {
             }
         });
 
-        nomGrup.setText("Introdueix el nom");
+        nomGrup.setText(grups.getNom());
 
         jLabel1.setText("Nom:");
 
         jLabel3.setText("Quota:");
 
-        quotaGrup.setText("Introdueix la quota");
+        quotaGrup.setText(Float.toString(grups.getQuota()));
 
         jLabel4.setText("Nº Alumnes:");
 
@@ -93,7 +93,7 @@ public class ModificarGrups extends javax.swing.JFrame {
             }
         });
 
-        nAlumnesGrup.setText("Introdueix el nom d'alumnes");
+        nAlumnesGrup.setText(Integer.toString(grups.getnumAlumnes()));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,7 +115,7 @@ public class ModificarGrups extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(148, 148, 148)
                         .addComponent(jButton1)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,8 +159,8 @@ public class ModificarGrups extends javax.swing.JFrame {
             grupTable.Update(grups);
             JOptionPane.showMessageDialog(null, "Grup modificat",
                     "Modificar", JOptionPane.INFORMATION_MESSAGE);
-            VentanaAlumnes ventAlum = new VentanaAlumnes();
-            ventAlum.actualitzarMostrar();
+            VentanaGrups ventGrups = new VentanaGrups();
+            ventGrups.actualitzarMostrar();
         } catch (ClassNotFoundException | NullConnectionException ex) {
             System.out.println(ex.getMessage());
         } catch (SQLException e) {

@@ -47,7 +47,7 @@
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="14" max="32767" attributes="0"/>
+              <EmptySpace pref="107" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -84,7 +84,9 @@
   <SubComponents>
     <Component class="javax.swing.JTextField" name="nomGrup">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Introdueix el nom"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="grups.getNom()" type="code"/>
+        </Property>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(grups.getNom())"/>
@@ -102,7 +104,9 @@
     </Component>
     <Component class="javax.swing.JTextField" name="quotaGrup">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Introdueix la quota"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Float.toString(grups.getQuota())" type="code"/>
+        </Property>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(Float.toString(grups.getQuota()))"/>
@@ -123,7 +127,9 @@
     </Component>
     <Component class="javax.swing.JTextField" name="nAlumnesGrup">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Introdueix el nom d&apos;alumnes"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Integer.toString(grups.getnumAlumnes())" type="code"/>
+        </Property>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(grups.getnumAlumnes())"/>

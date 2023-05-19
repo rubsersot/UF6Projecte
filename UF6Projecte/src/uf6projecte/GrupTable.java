@@ -110,7 +110,7 @@ public class GrupTable extends ORMTable {
             throw new NullConnectionException();
         }
         GrupEntity g = (GrupEntity) o;
-        String sqlCommand = "DELETE FROM Grup WHERE codiGrup= "+ g.getID();
+        String sqlCommand = "DELETE FROM GRUP WHERE codiGrup= "+ g.getID();
 
         Statement st = getBDConnection().getConnection().createStatement();
         int numFilesAfectades = st.executeUpdate(sqlCommand);
@@ -140,7 +140,7 @@ public class GrupTable extends ORMTable {
             throw new NullConnectionException();
         }
         GrupEntity g = (GrupEntity) o;
-        String sqlCommand = "UPDATE Grup SET nom = '" + g.getNom() + "', numAlumnes = " + g.getnumAlumnes() +
+        String sqlCommand = "UPDATE GRUP SET nom = '" + g.getNom() + "', numAlumnes = " + g.getnumAlumnes() +
                 ", quota = " + g.getQuota() + " WHERE codiGrup = " + g.getID();
 
         Statement st = getBDConnection().getConnection().createStatement();
