@@ -48,10 +48,6 @@ public class VentanaAlumnes extends javax.swing.JFrame {
         return llista_alumnes.get(contadorAlumnes);
     }
 
-    public static int getNumAlumnes() {
-        return llista_alumnes.size();
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
